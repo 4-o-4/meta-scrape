@@ -14,9 +14,7 @@ def main() -> None:
     scraper = get_scraper(urls[0])
     all_scenes: list[list[dict[str, object]]] = []
     for url in urls:
-        collection = scraper(url)
-        scene = [node.as_json_dict() for node in collection]
-        all_scenes.append(scene)
+        all_scenes.append(scraper(url))
 
     json.dump(all_scenes, sys.stdout, ensure_ascii=False, indent=2)
     sys.stdout.write("\n")

@@ -3,10 +3,9 @@ from __future__ import annotations
 from typing import Callable
 from urllib.parse import urlparse
 
-from text_segments import TextSegments
 from scrape.xxx import scrape_xxx
 
-Scraper = Callable[[str], TextSegments]
+Scraper = Callable[[str], list[dict[str, object]]]
 
 _REGISTRY: dict[str, Scraper] = {
     "xxx": scrape_xxx,
