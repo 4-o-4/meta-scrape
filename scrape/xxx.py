@@ -71,15 +71,19 @@ def _process_element(
 
 def scrape_xxx(
         url: str,
+        *,
+        driver: WebDriver | None = None,
 ) -> list[ScrapedItem]:
-    driver: WebDriver = SafariWebDriver()
+    own_driver = driver is None
+    d: WebDriver = driver if driver is not None else SafariWebDriver()
     try:
-        driver.get(url)
-        content_blocks = driver.find_elements(By.CSS_SELECTOR, "div.item.center.menC")
+        d.get(url)
+        content_blocks = d.find_elements(By.CSS_SELECTOR, "div.item.center.menC")
         out: list[ScrapedItem] = []
         for block in content_blocks:
             for child in block.find_elements(By.XPATH, "./*"):
                 _process_element(child, out)
         return out
     finally:
-        driver.quit()
+        if own_driver:
+            d.quit()

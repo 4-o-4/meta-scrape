@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 
 from scrape.xxx import scrape_xxx
 
-Scraper = Callable[[str], list[dict[str, object]]]
+Scraper = Callable[..., list[dict[str, object]]]
 
 _REGISTRY: dict[str, Scraper] = {
     "xxx": scrape_xxx,
